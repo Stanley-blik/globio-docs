@@ -228,7 +228,7 @@ async function getSafeConfig(key, defaultValue, validator) {
 
 // Usage
 const maxPlayers = await getSafeConfig('max_players', 4, (value) => {
-  return typeof value === 'number' && value > 0 && value <= 100
+  return typeof value === 'number' && value > 0 && value &lt;= 100
 })
 ```
 
@@ -354,7 +354,7 @@ class ConfigCache {
   async get(key, defaultValue) {
     const cached = this.cache.get(key)
     
-    if (cached && Date.now() - cached.timestamp < this.ttl) {
+    if (cached && Date.now() - cached.timestamp &lt; this.ttl) {
       return cached.value
     }
     

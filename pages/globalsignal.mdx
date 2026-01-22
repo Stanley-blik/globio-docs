@@ -177,7 +177,7 @@ if (playerState.level === 5 && !playerState.hasSeenTutorial) {
 }
 
 // Location-based messaging
-if (playerState.currentArea === 'boss_room' && playerState.health < 20) {
+if (playerState.currentArea === 'boss_room' && playerState.health &lt; 20) {
   await signal.showInAppMessage('player123', {
     type: 'tip',
     message: 'Low health! Consider using a health potion before fighting the boss',

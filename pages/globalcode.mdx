@@ -86,7 +86,7 @@ export default async function findMatch(data, context) {
   const waitingPlayers = await db.collection('matchmaking')
     .where('gameMode', '==', gameMode)
     .where('skillLevel', '>=', skillLevel - 100)
-    .where('skillLevel', '<=', skillLevel + 100)
+    .where('skillLevel', '&lt;=', skillLevel + 100)
     .where('status', '==', 'waiting')
     .limit(3)
     .get()
@@ -160,7 +160,7 @@ export default async function manageTournament(data, context) {
   
   switch (action) {
     case 'join':
-      if (tournamentData.players.length < tournamentData.maxPlayers) {
+      if (tournamentData.players.length &lt; tournamentData.maxPlayers) {
         await tournament.ref.update({
           players: [...tournamentData.players, playerId],
           updatedAt: new Date()
@@ -351,7 +351,7 @@ export default async function cachedFunction(data, context) {
   const cached = cache.get(cacheKey)
   
   // Return cached result if valid
-  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+  if (cached && Date.now() - cached.timestamp &lt; CACHE_TTL) {
     return cached.data
   }
   

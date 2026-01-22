@@ -7,7 +7,7 @@ export default {
     title: '🚀 Getting Started',
     type: 'page'
   },
-  '---': {
+  '---core': {
     type: 'separator',
     title: 'The Core 5'
   },
@@ -31,7 +31,7 @@ export default {
     title: '⚡ GlobalPulse',
     type: 'page'
   },
-  '----': {
+  '---power': {
     type: 'separator',
     title: 'The Power 5'
   },
@@ -55,7 +55,7 @@ export default {
     title: '💎 GlobalMart',
     type: 'page'
   },
-  '-----': {
+  '---platform': {
     type: 'separator',
     title: 'Platform'
   },

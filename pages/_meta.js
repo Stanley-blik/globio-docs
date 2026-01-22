@@ -1,43 +1,66 @@
 export default {
   index: {
-    title: 'Introduction',
-    theme: {
-      breadcrumb: false,
-      footer: true,
-      sidebar: false,
-      toc: true,
-      pagination: false
-    }
+    title: '🎮 Home',
+    type: 'page'
   },
-  'getting-started': 'Getting Started',
+  'getting-started': {
+    title: '🚀 Getting Started',
+    type: 'page'
+  },
   '---': {
-    type: 'separator'
+    type: 'separator',
+    title: 'The Core 5'
   },
-  'core-services': {
-    title: 'The Core 5',
-    type: 'menu',
-    items: {
-      globaldoc: 'GlobalDoc',
-      globalvault: 'GlobalVault', 
-      globalcode: 'GlobalCode',
-      globioid: 'GlobioID',
-      globalpulse: 'GlobalPulse'
-    }
+  globaldoc: {
+    title: '🗄️ GlobalDoc',
+    type: 'page'
   },
-  'power-services': {
-    title: 'The Power 5',
-    type: 'menu',
-    items: {
-      globalsync: 'GlobalSync',
-      globalbrain: 'GlobalBrain',
-      globalscope: 'GlobalScope',
-      globalsignal: 'GlobalSignal',
-      globalmart: 'GlobalMart'
-    }
+  globalvault: {
+    title: '📦 GlobalVault', 
+    type: 'page'
+  },
+  globalcode: {
+    title: '⚡ GlobalCode',
+    type: 'page'
+  },
+  globioid: {
+    title: '🆔 GlobioID',
+    type: 'page'
+  },
+  globalpulse: {
+    title: '⚡ GlobalPulse',
+    type: 'page'
   },
   '----': {
-    type: 'separator'
+    type: 'separator',
+    title: 'The Power 5'
   },
-  deployment: 'Deployment',
-  features: 'Platform Features'
+  globalsync: {
+    title: '⚔️ GlobalSync',
+    type: 'page'
+  },
+  globalbrain: {
+    title: '🧠 GlobalBrain',
+    type: 'page'
+  },
+  globalscope: {
+    title: '📊 GlobalScope',
+    type: 'page'
+  },
+  globalsignal: {
+    title: '📡 GlobalSignal',
+    type: 'page'
+  },
+  globalmart: {
+    title: '💎 GlobalMart',
+    type: 'page'
+  },
+  '-----': {
+    type: 'separator',
+    title: 'Platform'
+  },
+  deployment: {
+    title: '🚀 Deployment',
+    type: 'page'
+  }
 }

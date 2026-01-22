@@ -15,29 +15,25 @@ export default {
     title: '🗄️ GlobalDoc',
     type: 'page'
   },
+  globalsync: {
+    title: '⚔️ GlobalSync',
+    type: 'page'
+  },
   globalvault: {
     title: '📦 GlobalVault', 
-    type: 'page'
-  },
-  globalcode: {
-    title: '⚡ GlobalCode',
-    type: 'page'
-  },
-  globioid: {
-    title: '🆔 GlobioID',
     type: 'page'
   },
   globalpulse: {
     title: '⚡ GlobalPulse',
     type: 'page'
   },
+  globioid: {
+    title: '🆔 Globio ID',
+    type: 'page'
+  },
   '---power': {
     type: 'separator',
     title: 'The Power 5'
-  },
-  globalsync: {
-    title: '⚔️ GlobalSync',
-    type: 'page'
   },
   globalbrain: {
     title: '🧠 GlobalBrain',
@@ -49,6 +45,10 @@ export default {
   },
   globalsignal: {
     title: '📡 GlobalSignal',
+    type: 'page'
+  },
+  globalcode: {
+    title: '⚡ GlobalCode',
     type: 'page'
   },
   globalmart: {

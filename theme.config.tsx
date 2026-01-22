@@ -7,7 +7,7 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/Stanley-blik/globio-docs',
   },
   chat: {
-    link: 'https://discord.gg/globio',
+    link: 'https://discord.gg/wfkCSURNcq',
   },
   docsRepositoryBase: 'https://github.com/Stanley-blik/globio-docs',
   footer: {

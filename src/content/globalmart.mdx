@@ -1,0 +1,259 @@
+# GlobalMart - Virtual Economy & IAP
+
+**GlobalMart** is Globio's virtual economy service. Manage in-app purchases, virtual currencies, item inventories, and create engaging monetization systems for your games.
+
+## 🚀 Quick Start
+
+```javascript
+import { GlobalMart } from '@stanlink/globio/gaming'
+
+const mart = new GlobalMart({
+  apiKey: 'your-api-key',
+  projectId: 'your-project-id'
+})
+
+// Process an in-app purchase
+const purchaseResult = await mart.purchaseItem('player123', {
+  itemId: 'legendary_sword',
+  currency: 'gems',
+  amount: 500,
+  platform: 'ios'
+})
+
+if (purchaseResult.success) {
+  console.log('Purchase successful!', purchaseResult.transaction)
+  grantItemToPlayer(purchaseResult.items)
+}
+```
+
+## 💰 Virtual Currencies
+
+### Currency Management
+
+```javascript
+// Define virtual currencies
+const currencies = await mart.createCurrency({
+  id: 'gems',
+  name: 'Gems',
+  symbol: '💎',
+  type: 'premium', // premium or soft
+  exchangeRates: {
+    'USD': 0.01, // 1 gem = $0.01
+    'coins': 10  // 1 gem = 10 coins
+  }
+})
+
+// Grant currency to player
+await mart.grantCurrency('player123', {
+  currency: 'gems',
+  amount: 100,
+  reason: 'level_completion_bonus',
+  metadata: {
+    level: 5,
+    performance: 'excellent'
+  }
+})
+
+// Deduct currency
+await mart.deductCurrency('player123', {
+  currency: 'gems',
+  amount: 50,
+  reason: 'item_purchase',
+  itemId: 'health_potion'
+})
+```
+
+### Currency Exchange
+
+```javascript
+// Exchange between currencies
+const exchangeResult = await mart.exchangeCurrency('player123', {
+  fromCurrency: 'gems',
+  toCurrency: 'coins',
+  fromAmount: 10,
+  exchangeRate: 10 // 1 gem = 10 coins
+})
+
+console.log('Exchanged:', exchangeResult.fromAmount, 'gems for', exchangeResult.toAmount, 'coins')
+
+// Dynamic exchange rates
+const currentRates = await mart.getExchangeRates()
+console.log('Current gem to coin rate:', currentRates.gems_to_coins)
+```
+
+## 🛍️ Item Store
+
+### Store Catalog
+
+```javascript
+// Create store items
+const storeItems = [
+  {
+    id: 'health_potion',
+    name: 'Health Potion',
+    description: 'Restores 50 HP instantly',
+    category: 'consumables',
+    rarity: 'common',
+    prices: [
+      { currency: 'coins', amount: 25 },
+      { currency: 'gems', amount: 5 }
+    ],
+    effects: { health: 50 },
+    stackable: true,
+    maxStack: 99
+  },
+  {
+    id: 'legendary_sword',
+    name: 'Excalibur',
+    description: 'The legendary sword of kings',
+    category: 'weapons',
+    rarity: 'legendary',
+    prices: [
+      { currency: 'gems', amount: 500 }
+    ],
+    stats: { attack: 100, critical: 15 },
+    requirements: { level: 20 },
+    limited: true,
+    stock: 100
+  }
+]
+
+await mart.updateStoreCatalog(storeItems)
+```
+### Dynamic Pricing
+
+```javascript
+// AI-powered dynamic pricing
+const dynamicPrice = await mart.getDynamicPrice('player123', 'legendary_sword', {
+  playerProfile: {
+    level: 25,
+    totalSpent: 49.99,
+    lastPurchase: Date.now() - 604800000, // 1 week ago
+    preferredCategory: 'weapons'
+  },
+  marketConditions: {
+    demand: 'high',
+    supply: 'limited',
+    seasonalEvent: 'summer_sale'
+  }
+})
+
+console.log('Dynamic price:', dynamicPrice.recommendedPrice)
+console.log('Discount applied:', dynamicPrice.discount)
+```
+
+### Personalized Offers
+
+```javascript
+// Generate personalized offers
+const personalizedOffers = await mart.generateOffers('player123', {
+  playerData: {
+    level: 15,
+    favoriteWeapon: 'bow',
+    playStyle: 'ranged',
+    weakestStat: 'defense'
+  },
+  purchaseHistory: ['health_potion', 'mana_potion'],
+  budget: 'medium'
+})
+
+console.log('Recommended items:', personalizedOffers.items)
+console.log('Special bundles:', personalizedOffers.bundles)
+```
+
+## 🎁 Inventory Management
+
+### Player Inventory
+
+```javascript
+// Get player inventory
+const inventory = await mart.getInventory('player123')
+console.log('Player items:', inventory.items)
+console.log('Currency balances:', inventory.currencies)
+
+// Add item to inventory
+await mart.addToInventory('player123', {
+  itemId: 'magic_bow',
+  quantity: 1,
+  source: 'quest_reward',
+  metadata: {
+    questId: 'dragon_slayer',
+    enchantment: 'fire_damage'
+  }
+})
+
+// Remove item from inventory
+await mart.removeFromInventory('player123', {
+  itemId: 'health_potion',
+  quantity: 3,
+  reason: 'consumed'
+})
+```
+
+### Item Crafting
+
+```javascript
+// Define crafting recipes
+const craftingRecipes = [
+  {
+    id: 'iron_sword',
+    name: 'Iron Sword',
+    category: 'weapons',
+    requirements: [
+      { itemId: 'iron_ore', quantity: 3 },
+      { itemId: 'wood', quantity: 1 },
+      { currency: 'coins', amount: 100 }
+    ],
+    results: [
+      { itemId: 'iron_sword', quantity: 1 }
+    ],
+    craftingTime: 300000, // 5 minutes
+    experience: 50
+  }
+]
+
+// Craft item
+const craftingResult = await mart.craftItem('player123', {
+  recipeId: 'iron_sword',
+  quantity: 1
+})
+
+if (craftingResult.success) {
+  console.log('Crafting started, completion time:', craftingResult.completionTime)
+} else {
+  console.log('Crafting failed:', craftingResult.reason)
+}
+```
+
+## 💳 In-App Purchases
+
+### Purchase Processing
+
+```javascript
+// Process real money purchase
+const iapResult = await mart.processIAP('player123', {
+  productId: 'gem_pack_large',
+  platform: 'ios',
+  receipt: appleReceiptData,
+  transactionId: 'txn_123456789'
+})
+
+if (iapResult.verified) {
+  // Grant purchased items
+  await mart.grantPurchaseRewards('player123', {
+    productId: 'gem_pack_large',
+    items: [
+      { currency: 'gems', amount: 1000 },
+      { itemId: 'bonus_chest', quantity: 1 }
+    ]
+  })
+  
+  console.log('Purchase verified and items granted')
+} else {
+  console.log('Purchase verification failed:', iapResult.error)
+}
+```
+
+---
+
+**🎉 Congratulations! You've learned about all 10 Globio services. Ready to build the next hit game? [Get Started](https://console.globio.stanl.ink) →**

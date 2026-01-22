@@ -1,0 +1,354 @@
+# GlobalVault - Cloud Storage
+
+**GlobalVault** is Globio's cloud storage service for files, images, videos, and any binary data. Perfect for game assets, save files, screenshots, and user-generated content.
+
+## 🚀 Quick Start
+
+```javascript
+import { GlobalVault } from '@stanlink/globio'
+
+const storage = new GlobalVault({
+  apiKey: 'your-api-key',
+  projectId: 'your-project-id'
+})
+
+// Upload a file
+const file = document.getElementById('fileInput').files[0]
+const uploadResult = await storage.ref('saves/player123.json').put(file)
+console.log('File uploaded:', uploadResult.ref.url)
+```
+
+## 📁 File Operations
+
+### Upload Files
+
+```javascript
+// Upload from file input
+const fileInput = document.getElementById('fileInput')
+const file = fileInput.files[0]
+const uploadResult = await storage.ref('screenshots/epic-moment.png').put(file)
+
+// Upload from blob
+const canvas = document.getElementById('gameCanvas')
+canvas.toBlob(async (blob) => {
+  const result = await storage.ref('screenshots/canvas-capture.png').put(blob)
+  console.log('Screenshot saved:', result.ref.url)
+})
+
+// Upload with metadata
+const result = await storage.ref('saves/player123.json').put(file, {
+  customMetadata: {
+    playerId: 'player123',
+    gameVersion: '1.2.0',
+    level: '5'
+  }
+})
+```
+
+### Download Files
+
+```javascript
+// Get download URL
+const url = await storage.ref('saves/player123.json').getDownloadURL()
+console.log('Download URL:', url)
+
+// Download file data
+const response = await fetch(url)
+const saveData = await response.json()
+```
+
+### Delete Files
+
+```javascript
+// Delete a file
+await storage.ref('old-screenshot.png').delete()
+```
+
+## 🎮 Gaming Use Cases
+
+### Save Files
+
+```javascript
+// Save game state
+const saveData = {
+  playerId: 'player123',
+  level: 5,
+  position: { x: 100, y: 200 },
+  inventory: ['sword', 'potion', 'key'],
+  timestamp: Date.now()
+}
+
+const saveBlob = new Blob([JSON.stringify(saveData)], { type: 'application/json' })
+await storage.ref(`saves/${playerId}/quicksave.json`).put(saveBlob)
+
+// Load game state
+const saveUrl = await storage.ref(`saves/${playerId}/quicksave.json`).getDownloadURL()
+const response = await fetch(saveUrl)
+const loadedSave = await response.json()
+```
+
+### Screenshots & Replays
+
+```javascript
+// Save screenshot
+const canvas = document.getElementById('gameCanvas')
+canvas.toBlob(async (blob) => {
+  const timestamp = Date.now()
+  const path = `screenshots/${playerId}/${timestamp}.png`
+  await storage.ref(path).put(blob)
+})
+
+// Save replay data
+const replayData = {
+  playerId: 'player123',
+  gameMode: 'battle-royale',
+  actions: [...gameActions],
+  duration: 300000
+}
+
+const replayBlob = new Blob([JSON.stringify(replayData)], { type: 'application/json' })
+await storage.ref(`replays/${playerId}/${Date.now()}.json`).put(replayBlob)
+```
+
+### User-Generated Content
+
+```javascript
+// Upload custom level
+const levelData = {
+  name: 'Epic Castle',
+  creator: 'player123',
+  objects: [...levelObjects],
+  thumbnail: 'base64-image-data'
+}
+
+const levelBlob = new Blob([JSON.stringify(levelData)], { type: 'application/json' })
+await storage.ref(`user-levels/${levelId}.json`).put(levelBlob, {
+  customMetadata: {
+    creator: 'player123',
+    difficulty: 'hard',
+    rating: '4.5'
+  }
+})
+```
+
+## 📊 File Management
+
+### List Files
+
+```javascript
+// List all files in a directory
+const files = await storage.ref('screenshots/player123').listAll()
+files.items.forEach(fileRef => {
+  console.log('File:', fileRef.name)
+})
+
+// List with pagination
+const result = await storage.ref('saves').list({ maxResults: 20 })
+result.items.forEach(fileRef => {
+  console.log('Save file:', fileRef.name)
+})
+```
+
+### File Metadata
+
+```javascript
+// Get file metadata
+const metadata = await storage.ref('saves/player123.json').getMetadata()
+console.log('File size:', metadata.size)
+console.log('Content type:', metadata.contentType)
+console.log('Created:', metadata.timeCreated)
+console.log('Custom metadata:', metadata.customMetadata)
+
+// Update metadata
+await storage.ref('saves/player123.json').updateMetadata({
+  customMetadata: {
+    lastModified: Date.now().toString(),
+    version: '2.0'
+  }
+})
+```
+
+## 🔒 Security & Access Control
+
+### Public Files
+
+```javascript
+// Upload public file (accessible to anyone)
+await storage.ref('public/game-trailer.mp4').put(videoFile)
+const publicUrl = await storage.ref('public/game-trailer.mp4').getDownloadURL()
+```
+
+### Private Files
+
+```javascript
+// Upload private file (requires authentication)
+await storage.ref(`private/${userId}/personal-data.json`).put(dataFile)
+// Only the authenticated user can access this file
+```
+
+### Temporary URLs
+
+```javascript
+// Generate temporary download URL (expires in 1 hour)
+const tempUrl = await storage.ref('private/sensitive-data.json').getDownloadURL({
+  expiresIn: 3600000 // 1 hour in milliseconds
+})
+```
+
+## 📱 Platform Examples
+
+### Unity C#
+
+```csharp
+// Upload save file in Unity
+public async void SaveGame() {
+    var saveData = new SaveData {
+        playerId = "player123",
+        level = 5,
+        score = 1500
+    };
+    
+    string json = JsonUtility.ToJson(saveData);
+    byte[] data = System.Text.Encoding.UTF8.GetBytes(json);
+    
+    await GlobalVault.Ref($"saves/{playerId}/save.json").PutBytes(data);
+}
+
+// Load save file
+public async void LoadGame() {
+    byte[] data = await GlobalVault.Ref($"saves/{playerId}/save.json").GetBytes();
+    string json = System.Text.Encoding.UTF8.GetString(data);
+    SaveData saveData = JsonUtility.FromJson<SaveData>(json);
+}
+```
+
+### Flutter/Dart
+
+```dart
+// Upload image in Flutter
+Future<void> uploadScreenshot(File imageFile) async {
+  final ref = GlobalVault.ref('screenshots/${playerId}/${DateTime.now().millisecondsSinceEpoch}.png');
+  await ref.putFile(imageFile);
+}
+
+// Download and display image
+Future<Widget> loadScreenshot(String path) async {
+  final url = await GlobalVault.ref(path).getDownloadURL();
+  return Image.network(url);
+}
+```
+
+## 🚀 Performance Optimization
+
+### Compression
+
+```javascript
+// Compress images before upload
+async function compressAndUpload(file, quality = 0.8) {
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+  const img = new Image()
+  
+  return new Promise((resolve) => {
+    img.onload = async () => {
+      canvas.width = img.width
+      canvas.height = img.height
+      ctx.drawImage(img, 0, 0)
+      
+      canvas.toBlob(async (compressedBlob) => {
+        const result = await storage.ref('compressed-images/image.jpg').put(compressedBlob)
+        resolve(result)
+      }, 'image/jpeg', quality)
+    }
+    img.src = URL.createObjectURL(file)
+  })
+}
+```
+
+### Batch Operations
+
+```javascript
+// Upload multiple files efficiently
+async function uploadBatch(files) {
+  const uploadPromises = files.map((file, index) => {
+    return storage.ref(`batch-upload/${index}-${file.name}`).put(file)
+  })
+  
+  const results = await Promise.all(uploadPromises)
+  return results
+}
+```
+
+### Caching
+
+```javascript
+// Cache download URLs
+const urlCache = new Map()
+
+async function getCachedDownloadURL(path) {
+  if (urlCache.has(path)) {
+    return urlCache.get(path)
+  }
+  
+  const url = await storage.ref(path).getDownloadURL()
+  urlCache.set(path, url)
+  return url
+}
+```
+
+## 💡 Best Practices
+
+### File Organization
+
+```javascript
+// ✅ Good: Organized structure
+saves/
+  player123/
+    quicksave.json
+    checkpoint-level-5.json
+screenshots/
+  player123/
+    2024-01-15/
+      epic-moment-1.png
+      victory-screen.png
+user-content/
+  levels/
+    level-123.json
+  mods/
+    custom-skin.png
+
+// ❌ Avoid: Flat structure
+player123-save.json
+player123-screenshot-1.png
+player123-level.json
+```
+
+### File Naming
+
+```javascript
+// ✅ Use consistent, descriptive names
+const timestamp = Date.now()
+const filename = `screenshot-${playerId}-${timestamp}.png`
+const path = `screenshots/${playerId}/${filename}`
+
+// ✅ Include metadata in path
+const path = `saves/${playerId}/${gameMode}/${level}/save.json`
+```
+
+### Error Handling
+
+```javascript
+async function safeUpload(file, path) {
+  try {
+    const result = await storage.ref(path).put(file)
+    return { success: true, result }
+  } catch (error) {
+    console.error('Upload failed:', error)
+    return { success: false, error: error.message }
+  }
+}
+```
+
+---
+
+**Next: Learn about [GlobalCode Functions](/globalcode) →**

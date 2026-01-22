@@ -1,0 +1,251 @@
+# GlobalScope - High-Performance Analytics
+
+**GlobalScope** is Globio's analytics service designed for games. Track millions of events with high-cardinality data at a fraction of the cost of traditional analytics platforms.
+
+## 🚀 Quick Start
+
+```javascript
+import { GlobalScope } from '@stanlink/globio/gaming'
+
+const analytics = new GlobalScope({
+  apiKey: 'your-api-key',
+  projectId: 'your-project-id'
+})
+
+// Track a custom event
+await analytics.trackEvent('level_completed', {
+  playerId: 'player123',
+  level: 5,
+  score: 9500,
+  timeToComplete: 180000, // 3 minutes
+  difficulty: 'normal',
+  deaths: 2
+})
+```
+
+## 📊 Event Tracking
+
+### Game Events
+
+```javascript
+// Player progression
+await analytics.trackProgression('player123', {
+  level: 10,
+  experience: 15000,
+  skillPoints: 25,
+  unlockedAchievements: ['first-boss', 'level-10']
+})
+
+// Combat events
+await analytics.trackEvent('combat_encounter', {
+  playerId: 'player123',
+  enemyType: 'dragon',
+  outcome: 'victory',
+  duration: 45000,
+  damageDealt: 2500,
+  damageTaken: 800,
+  weaponUsed: 'legendary-sword'
+})
+
+// Economic events
+await analytics.trackPurchase('player123', {
+  itemId: 'health-potion',
+  quantity: 5,
+  currency: 'gold',
+  amount: 50,
+  playerLevel: 8,
+  purchaseContext: 'pre-boss-fight'
+})
+```
+
+### User Behavior
+
+```javascript
+// Session tracking
+await analytics.trackEvent('session_start', {
+  playerId: 'player123',
+  platform: 'mobile',
+  deviceType: 'iPhone 14',
+  connectionType: 'wifi',
+  gameVersion: '1.2.3'
+})
+
+// Feature usage
+await analytics.trackEvent('feature_used', {
+  playerId: 'player123',
+  feature: 'inventory_management',
+  duration: 30000,
+  itemsManaged: 12,
+  context: 'post-level-completion'
+})
+
+// Social interactions
+await analytics.trackEvent('social_interaction', {
+  playerId: 'player123',
+  interactionType: 'friend_request_sent',
+  targetPlayer: 'player456',
+  context: 'post-match'
+})
+```
+
+### Performance Metrics
+
+```javascript
+// Game performance
+await analytics.trackEvent('performance_metric', {
+  playerId: 'player123',
+  metric: 'frame_rate',
+  value: 58.5,
+  level: 'forest-temple',
+  deviceSpecs: {
+    ram: '8GB',
+    gpu: 'A15 Bionic',
+    os: 'iOS 17.1'
+  }
+})
+
+// Load times
+await analytics.trackEvent('load_time', {
+  screen: 'main_menu',
+  duration: 2500,
+  assetSize: '15MB',
+  cacheHit: true
+})
+```
+## 📈 Real-time Dashboards
+
+### Live Metrics
+
+```javascript
+// Get real-time player count
+const liveMetrics = await analytics.getLiveMetrics([
+  'active_players',
+  'concurrent_sessions',
+  'revenue_today'
+])
+
+console.log('Active players:', liveMetrics.active_players)
+console.log('Revenue today:', liveMetrics.revenue_today)
+
+// Subscribe to live updates
+const unsubscribe = analytics.subscribeLiveMetrics(['active_players'], (metrics) => {
+  updateDashboard(metrics)
+})
+```
+
+### Custom Dashboards
+
+```javascript
+// Create custom dashboard
+const dashboard = await analytics.createDashboard('Game Performance', {
+  widgets: [
+    {
+      type: 'line_chart',
+      title: 'Daily Active Users',
+      metric: 'daily_active_users',
+      timeRange: '30d'
+    },
+    {
+      type: 'funnel',
+      title: 'Player Progression',
+      steps: ['tutorial_start', 'tutorial_complete', 'level_1_complete', 'level_5_complete']
+    },
+    {
+      type: 'heatmap',
+      title: 'Level Difficulty',
+      xAxis: 'level_number',
+      yAxis: 'completion_rate'
+    }
+  ]
+})
+```
+
+## 🎮 Gaming Analytics
+
+### Player Lifecycle
+
+```javascript
+// Track player journey
+const playerJourney = await analytics.getPlayerJourney('player123', {
+  timeRange: '7d',
+  events: [
+    'first_session',
+    'tutorial_complete',
+    'first_purchase',
+    'level_10_reached',
+    'friend_added',
+    'guild_joined'
+  ]
+})
+
+console.log('Player milestones:', playerJourney.milestones)
+console.log('Time between events:', playerJourney.timeBetweenEvents)
+```
+
+### Retention Analysis
+
+```javascript
+// Analyze player retention
+const retentionData = await analytics.getRetentionAnalysis({
+  cohortType: 'weekly',
+  startDate: '2024-01-01',
+  endDate: '2024-01-31',
+  segmentBy: ['acquisition_channel', 'player_level']
+})
+
+console.log('Day 1 retention:', retentionData.day1)
+console.log('Day 7 retention:', retentionData.day7)
+console.log('Day 30 retention:', retentionData.day30)
+```
+
+### A/B Test Analysis
+
+```javascript
+// Analyze A/B test results
+const abTestResults = await analytics.getABTestResults('new_ui_test', {
+  metrics: ['conversion_rate', 'session_length', 'retention_day7'],
+  segments: ['new_players', 'returning_players'],
+  confidenceLevel: 0.95
+})
+
+console.log('Test significance:', abTestResults.isSignificant)
+console.log('Winner:', abTestResults.winner)
+console.log('Improvement:', abTestResults.improvement)
+```
+
+## 💰 Business Intelligence
+
+### Revenue Analytics
+
+```javascript
+// Revenue breakdown
+const revenueAnalysis = await analytics.getRevenueAnalysis({
+  timeRange: '30d',
+  groupBy: ['product_category', 'player_segment'],
+  metrics: ['total_revenue', 'arpu', 'arppu', 'conversion_rate']
+})
+
+console.log('Total revenue:', revenueAnalysis.total_revenue)
+console.log('ARPU:', revenueAnalysis.arpu)
+console.log('Top products:', revenueAnalysis.topProducts)
+```
+
+### Churn Analysis
+
+```javascript
+// Identify churn patterns
+const churnAnalysis = await analytics.getChurnAnalysis({
+  timeRange: '90d',
+  churnDefinition: 'no_activity_7d',
+  segments: ['free_players', 'paying_players'],
+  features: ['session_frequency', 'social_connections', 'progression_rate']
+})
+
+console.log('Churn rate:', churnAnalysis.churnRate)
+console.log('Risk factors:', churnAnalysis.riskFactors)
+console.log('Retention strategies:', churnAnalysis.recommendations)
+```
+
+---
+
+**Next: Learn about [GlobalSignal Notifications](/globalsignal) →**

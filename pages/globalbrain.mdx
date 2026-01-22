@@ -1,0 +1,286 @@
+# GlobalBrain - AI & ML at the Edge
+
+**GlobalBrain** brings AI and machine learning to your games with edge computing. Create intelligent NPCs, smart matchmaking, content moderation, and personalized experiences.
+
+## 🚀 Quick Start
+
+```javascript
+import { GlobalBrain } from '@stanlink/globio/gaming'
+
+const brain = new GlobalBrain({
+  apiKey: 'your-api-key',
+  projectId: 'your-project-id'
+})
+
+// Generate NPC dialogue
+const response = await brain.generateDialogue(
+  'Player just entered the tavern looking tired',
+  'Friendly Bartender'
+)
+console.log('NPC says:', response)
+```
+
+## 🤖 Smart NPCs
+
+### Dynamic Dialogue
+
+```javascript
+// Context-aware NPC conversations
+const npcResponse = await brain.generateDialogue(
+  `Player level: 15, just completed dragon quest, has 500 gold, looks injured`,
+  'Village Healer',
+  {
+    personality: 'wise and caring',
+    knowledge: ['healing', 'herbs', 'local legends'],
+    mood: 'concerned'
+  }
+)
+
+// NPC remembers previous interactions
+const followUpResponse = await brain.generateDialogue(
+  'Player returns after using the healing potion',
+  'Village Healer',
+  {
+    previousInteraction: 'gave healing potion',
+    relationship: 'friendly'
+  }
+)
+```
+
+### Intelligent Behavior
+
+```javascript
+// NPC decision making
+const npcAction = await brain.decideAction('goblin-warrior', {
+  playerPosition: { x: 100, y: 50 },
+  npcPosition: { x: 120, y: 60 },
+  npcHealth: 75,
+  playerHealth: 90,
+  nearbyAllies: 2,
+  availableActions: ['attack', 'defend', 'flee', 'call_for_help']
+})
+
+console.log('NPC decides to:', npcAction.action)
+console.log('Reasoning:', npcAction.reasoning)
+```
+
+### Adaptive Difficulty
+
+```javascript
+// AI adjusts game difficulty based on player performance
+const difficultyAdjustment = await brain.analyzeDifficulty({
+  playerId: 'player123',
+  recentPerformance: {
+    wins: 3,
+    losses: 7,
+    averageScore: 1200,
+    timeToComplete: 450000 // 7.5 minutes
+  },
+  playerProfile: {
+    skillLevel: 1400,
+    playtime: 50000,
+    preferredDifficulty: 'normal'
+  }
+})
+
+// Apply AI recommendations
+if (difficultyAdjustment.recommendation === 'decrease') {
+  reduceEnemyDamage(0.9)
+  increasePlayerHealth(1.1)
+}
+```
+
+## 🎯 Smart Matchmaking
+
+### Skill-Based Matching
+
+```javascript
+// Find optimal match using AI
+const match = await brain.findOptimalMatch('player123', {
+  gameMode: 'ranked',
+  currentSkillRating: 1500,
+  recentPerformance: [1.2, 0.8, 1.5, 0.9, 1.1], // K/D ratios
+  playStyle: 'aggressive',
+  preferredRoles: ['assault', 'support'],
+  connectionQuality: 'excellent',
+  region: 'us-east'
+})
+
+console.log('Matched with players:', match.players)
+console.log('Expected match quality:', match.qualityScore)
+console.log('Estimated wait time:', match.estimatedWaitTime)
+```
+
+### Team Balancing
+
+```javascript
+// AI balances teams for fair matches
+const balancedTeams = await brain.balanceTeams([
+  { id: 'player1', skill: 1600, role: 'tank' },
+  { id: 'player2', skill: 1400, role: 'dps' },
+  { id: 'player3', skill: 1550, role: 'support' },
+  { id: 'player4', skill: 1450, role: 'dps' },
+  { id: 'player5', skill: 1500, role: 'tank' },
+  { id: 'player6', skill: 1480, role: 'support' }
+])
+
+console.log('Team A:', balancedTeams.teamA)
+console.log('Team B:', balancedTeams.teamB)
+console.log('Balance score:', balancedTeams.balanceScore)
+```
+
+## 🛡️ Content Moderation
+
+### Text Filtering
+
+```javascript
+// AI-powered chat moderation
+const moderationResult = await brain.moderateText('Player message here')
+
+if (moderationResult.flagged) {
+  console.log('Message flagged for:', moderationResult.categories)
+  console.log('Confidence:', moderationResult.confidence)
+  
+  // Take appropriate action
+  if (moderationResult.severity === 'high') {
+    blockMessage()
+    warnPlayer()
+  } else {
+    filterMessage(moderationResult.suggestedEdit)
+  }
+}
+```
+
+### Image Moderation
+
+```javascript
+// Moderate user-generated images
+const imageModeration = await brain.moderateImage(imageUrl)
+
+if (imageModeration.inappropriate) {
+  console.log('Image contains:', imageModeration.detectedContent)
+  removeImage()
+  notifyModerators()
+} else {
+  approveImage()
+}
+```
+
+### Behavior Analysis
+
+```javascript
+// Detect toxic behavior patterns
+const behaviorAnalysis = await brain.analyzeBehavior('player123', {
+  recentActions: [
+    { type: 'chat', content: 'gg wp', timestamp: Date.now() - 60000 },
+    { type: 'team_kill', intentional: false, timestamp: Date.now() - 120000 },
+    { type: 'quit_early', reason: 'connection', timestamp: Date.now() - 300000 }
+  ],
+  historicalData: {
+    toxicityScore: 0.2,
+    helpfulnessScore: 0.8,
+    reportCount: 1,
+    commendationCount: 15
+  }
+})
+
+if (behaviorAnalysis.riskLevel === 'high') {
+  implementCooldownPeriod()
+}
+```
+## 🎮 Personalization
+
+### Content Recommendations
+
+```javascript
+// AI recommends content based on player preferences
+const recommendations = await brain.recommendContent('player123', {
+  playerProfile: {
+    favoriteGenres: ['action', 'adventure'],
+    completedLevels: ['forest-1', 'forest-2', 'desert-1'],
+    preferredDifficulty: 'normal',
+    playtime: 25000
+  },
+  availableContent: [
+    { id: 'mountain-1', genre: 'adventure', difficulty: 'normal' },
+    { id: 'cave-1', genre: 'horror', difficulty: 'hard' },
+    { id: 'city-1', genre: 'action', difficulty: 'normal' }
+  ]
+})
+
+console.log('Recommended levels:', recommendations.items)
+console.log('Reasoning:', recommendations.explanations)
+```
+
+### Dynamic Pricing
+
+```javascript
+// AI optimizes in-app purchase pricing
+const pricingOptimization = await brain.optimizePricing('player123', {
+  item: 'premium-skin',
+  basePrice: 4.99,
+  playerProfile: {
+    spendingHistory: [2.99, 1.99, 0.99],
+    engagementLevel: 'high',
+    timeInGame: 100000,
+    lastPurchase: Date.now() - 604800000 // 1 week ago
+  }
+})
+
+const optimizedPrice = pricingOptimization.recommendedPrice
+const discount = pricingOptimization.suggestedDiscount
+```
+
+## 🧠 Advanced AI Features
+
+### Procedural Content Generation
+
+```javascript
+// Generate game content using AI
+const generatedLevel = await brain.generateLevel({
+  theme: 'medieval-castle',
+  difficulty: 'medium',
+  playerLevel: 15,
+  estimatedPlayTime: 600000, // 10 minutes
+  objectives: ['rescue-princess', 'defeat-boss'],
+  constraints: {
+    maxEnemies: 20,
+    requiredRooms: ['throne-room', 'dungeon', 'tower'],
+    environmentHazards: true
+  }
+})
+
+console.log('Generated level:', generatedLevel.layout)
+console.log('Enemy placements:', generatedLevel.enemies)
+console.log('Loot distribution:', generatedLevel.loot)
+```
+
+### Player Churn Prediction
+
+```javascript
+// Predict if player is likely to quit
+const churnPrediction = await brain.predictChurn('player123', {
+  sessionData: {
+    averageSessionLength: 1800000, // 30 minutes
+    sessionsPerWeek: 8,
+    lastSession: Date.now() - 172800000 // 2 days ago
+  },
+  gameplayData: {
+    progressionRate: 0.7,
+    socialInteractions: 12,
+    purchaseHistory: [0.99, 2.99],
+    achievementCount: 25
+  }
+})
+
+if (churnPrediction.riskLevel === 'high') {
+  // Implement retention strategies
+  offerSpecialReward()
+  sendPersonalizedNotification()
+  adjustGameDifficulty()
+}
+```
+
+---
+
+**Next: Learn about [GlobalScope Analytics](/globalscope) →**

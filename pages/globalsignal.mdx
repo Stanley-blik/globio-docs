@@ -1,0 +1,246 @@
+# GlobalSignal - Push Notifications & Messaging
+
+**GlobalSignal** is Globio's notification and messaging service. Send push notifications, in-app messages, and email campaigns to engage and retain players.
+
+## 🚀 Quick Start
+
+```javascript
+import { GlobalSignal } from '@stanlink/globio/gaming'
+
+const signal = new GlobalSignal({
+  apiKey: 'your-api-key',
+  projectId: 'your-project-id'
+})
+
+// Send a push notification
+await signal.sendNotification('player123', {
+  title: 'Daily Bonus Available!',
+  body: 'Claim your daily reward before it expires',
+  data: {
+    type: 'daily_bonus',
+    reward: 'gold_coins',
+    amount: 100
+  }
+})
+```
+
+## 📱 Push Notifications
+
+### Basic Notifications
+
+```javascript
+// Simple notification
+await signal.sendNotification('player123', {
+  title: 'Level Complete!',
+  body: 'You earned 500 XP and unlocked a new skill',
+  icon: 'achievement-icon',
+  badge: 1
+})
+
+// Rich notification with actions
+await signal.sendNotification('player123', {
+  title: 'Guild War Starting!',
+  body: 'Your guild needs you in the battle',
+  image: 'https://example.com/guild-war-banner.jpg',
+  actions: [
+    { id: 'join', title: 'Join Battle', icon: 'sword' },
+    { id: 'later', title: 'Remind Later', icon: 'clock' }
+  ],
+  data: {
+    type: 'guild_war',
+    guildId: 'guild456',
+    battleId: 'battle789'
+  }
+})
+```
+
+### Targeted Notifications
+
+```javascript
+// Send to specific player segments
+await signal.sendToSegment('high_value_players', {
+  title: 'Exclusive VIP Offer',
+  body: 'Special 50% discount on premium items',
+  data: {
+    type: 'vip_offer',
+    discount: 50,
+    validUntil: Date.now() + 86400000 // 24 hours
+  }
+})
+
+// Send to players by location
+await signal.sendToLocation('US', {
+  title: 'Independence Day Event!',
+  body: 'Celebrate with special patriotic rewards',
+  data: {
+    type: 'holiday_event',
+    event: 'independence_day'
+  }
+})
+
+// Send to players by behavior
+await signal.sendToBehaviorSegment('inactive_players', {
+  title: 'We Miss You!',
+  body: 'Come back and claim your welcome back bonus',
+  data: {
+    type: 'win_back',
+    bonus: 'welcome_back_package'
+  }
+})
+```
+
+### Scheduled Notifications
+
+```javascript
+// Schedule notification for later
+const notificationId = await signal.scheduleNotification('player123', {
+  title: 'Energy Refilled!',
+  body: 'Your energy is full, time to play!',
+  data: { type: 'energy_full' }
+}, {
+  sendAt: new Date(Date.now() + 3600000), // 1 hour from now
+  timezone: 'America/New_York'
+})
+
+// Cancel scheduled notification
+await signal.cancelNotification(notificationId)
+
+// Recurring notifications
+await signal.scheduleRecurringNotification('player123', {
+  title: 'Daily Login Bonus',
+  body: 'Don\'t forget to claim your daily reward!',
+  data: { type: 'daily_reminder' }
+}, {
+  schedule: 'daily',
+  time: '09:00',
+  timezone: 'America/New_York',
+  daysOfWeek: [1, 2, 3, 4, 5] // Monday to Friday
+})
+```
+## 💬 In-App Messaging
+
+### Message Types
+
+```javascript
+// Banner message
+await signal.showInAppMessage('player123', {
+  type: 'banner',
+  title: 'New Update Available!',
+  message: 'Version 2.0 includes new levels and features',
+  action: {
+    text: 'Update Now',
+    url: 'https://app-store-link'
+  },
+  style: {
+    backgroundColor: '#4CAF50',
+    textColor: '#FFFFFF'
+  }
+})
+
+// Modal popup
+await signal.showInAppMessage('player123', {
+  type: 'modal',
+  title: 'Special Offer!',
+  message: 'Get 50% off on all premium items',
+  image: 'https://example.com/offer-banner.jpg',
+  buttons: [
+    { text: 'Shop Now', action: 'open_store', style: 'primary' },
+    { text: 'Maybe Later', action: 'dismiss', style: 'secondary' }
+  ]
+})
+
+// Fullscreen interstitial
+await signal.showInAppMessage('player123', {
+  type: 'fullscreen',
+  template: 'level_up_celebration',
+  data: {
+    newLevel: 10,
+    rewards: ['legendary_sword', 'gold_coins'],
+    nextLevelXP: 5000
+  }
+})
+```
+
+### Contextual Messaging
+
+```javascript
+// Show message based on player state
+const playerState = await getPlayerState('player123')
+
+if (playerState.level === 5 && !playerState.hasSeenTutorial) {
+  await signal.showInAppMessage('player123', {
+    type: 'tutorial',
+    title: 'New Feature Unlocked!',
+    message: 'You can now access the guild system',
+    tutorial: 'guild_introduction'
+  })
+}
+
+// Location-based messaging
+if (playerState.currentArea === 'boss_room' && playerState.health < 20) {
+  await signal.showInAppMessage('player123', {
+    type: 'tip',
+    message: 'Low health! Consider using a health potion before fighting the boss',
+    urgency: 'high'
+  })
+}
+```
+
+## 📧 Email Campaigns
+
+### Transactional Emails
+
+```javascript
+// Welcome email
+await signal.sendEmail('player123', {
+  template: 'welcome',
+  subject: 'Welcome to Epic Quest!',
+  data: {
+    playerName: 'John',
+    startingBonus: 1000,
+    firstQuestName: 'The Forest Adventure'
+  }
+})
+
+// Purchase confirmation
+await signal.sendEmail('player123', {
+  template: 'purchase_confirmation',
+  subject: 'Purchase Confirmed - Epic Sword Pack',
+  data: {
+    items: ['Legendary Sword', 'Shield of Power'],
+    totalAmount: '$9.99',
+    transactionId: 'txn_123456'
+  }
+})
+```
+
+### Marketing Campaigns
+
+```javascript
+// Create email campaign
+const campaign = await signal.createEmailCampaign({
+  name: 'Summer Event Announcement',
+  subject: 'Summer Festival is Here! 🌞',
+  template: 'summer_event',
+  targetSegment: 'active_players',
+  data: {
+    eventStartDate: '2024-06-21',
+    specialRewards: ['Beach Outfit', 'Summer Weapon Skin'],
+    eventDuration: '2 weeks'
+  },
+  schedule: {
+    sendAt: '2024-06-20T10:00:00Z',
+    timezone: 'UTC'
+  }
+})
+
+// Track campaign performance
+const campaignStats = await signal.getCampaignStats(campaign.id)
+console.log('Open rate:', campaignStats.openRate)
+console.log('Click rate:', campaignStats.clickRate)
+console.log('Conversion rate:', campaignStats.conversionRate)
+```
+
+---
+
+**Next: Learn about [GlobalMart Virtual Economy](/globalmart) →**

@@ -1,0 +1,500 @@
+# GlobalDoc - Document Database
+
+**GlobalDoc** is Globio's Firebase-compatible document database service. Store, query, and sync JSON documents with real-time updates - all at 99% less cost than Firestore.
+
+## 🚀 Quick Start
+
+```javascript
+import { GlobalDoc } from '@stanlink/globio'
+
+const globio = new GlobalDoc({
+  apiKey: 'your-api-key',
+  projectId: 'your-project-id'
+})
+
+// Add a document
+const users = globio.collection('users')
+const docRef = await users.add({
+  name: 'John Doe',
+  email: 'john@example.com',
+  level: 5,
+  createdAt: new Date()
+})
+
+console.log('Document added with ID:', docRef.id)
+```
+
+## 📚 Core Concepts
+
+### Collections
+Collections are containers for documents. Think of them as tables in a traditional database.
+
+```javascript
+// Get a collection reference
+const users = globio.collection('users')
+const posts = globio.collection('posts')
+const gameStats = globio.collection('gameStats')
+```
+
+### Documents
+Documents are JSON objects stored in collections. Each document has a unique ID.
+
+```javascript
+// Add a document with auto-generated ID
+const docRef = await users.add({
+  name: 'Alice',
+  score: 1500,
+  achievements: ['first-win', 'level-10']
+})
+
+// Add a document with custom ID
+await users.doc('player123').set({
+  name: 'Bob',
+  score: 2000,
+  lastLogin: new Date()
+})
+```
+
+## 🔍 Querying Data
+
+### Simple Queries
+
+```javascript
+// Get all documents
+const snapshot = await users.get()
+snapshot.forEach(doc => {
+  console.log(doc.id, doc.data())
+})
+
+// Query with conditions
+const highScorers = await users
+  .where('score', '>=', 1000)
+  .get()
+
+// Order and limit results
+const topPlayers = await users
+  .orderBy('score', 'desc')
+  .limit(10)
+  .get()
+```
+
+### Complex Queries
+
+```javascript
+// Multiple conditions
+const activeHighScorers = await users
+  .where('score', '>=', 1000)
+  .where('status', '==', 'active')
+  .where('lastLogin', '>=', new Date('2024-01-01'))
+  .orderBy('score', 'desc')
+  .limit(50)
+  .get()
+
+// Array queries
+const achievementHunters = await users
+  .where('achievements', 'array-contains', 'rare-collector')
+  .get()
+
+// In queries
+const specificUsers = await users
+  .where('userId', 'in', ['user1', 'user2', 'user3'])
+  .get()
+```
+
+## 📝 Writing Data
+
+### Adding Documents
+
+```javascript
+// Add with auto-generated ID
+const docRef = await users.add({
+  name: 'Charlie',
+  level: 1
+})
+
+// Add with custom ID
+await users.doc('charlie123').set({
+  name: 'Charlie',
+  level: 1
+})
+```
+
+### Updating Documents
+
+```javascript
+// Update specific fields
+await users.doc('charlie123').update({
+  level: 2,
+  lastUpdated: new Date()
+})
+
+// Set with merge (updates existing fields, adds new ones)
+await users.doc('charlie123').set({
+  newField: 'value'
+}, { merge: true })
+```
+
+### Deleting Documents
+
+```javascript
+// Delete a document
+await users.doc('charlie123').delete()
+
+// Delete a field
+await users.doc('alice123').update({
+  temporaryField: null // This deletes the field
+})
+```
+
+## ⚡ Real-time Updates
+
+### Listen to Documents
+
+```javascript
+// Listen to a single document
+const unsubscribe = users.doc('player123').onSnapshot(doc => {
+  if (doc.exists) {
+    console.log('Player data:', doc.data())
+  }
+})
+
+// Stop listening
+unsubscribe()
+```
+
+### Listen to Collections
+
+```javascript
+// Listen to all users
+const unsubscribe = users.onSnapshot(snapshot => {
+  snapshot.forEach(doc => {
+    console.log('User updated:', doc.data())
+  })
+})
+
+// Listen to query results
+const unsubscribe = users
+  .where('online', '==', true)
+  .onSnapshot(snapshot => {
+    console.log('Online users:', snapshot.size)
+  })
+```
+
+## 🔄 Batch Operations
+
+### Batch Writes
+
+```javascript
+const batch = globio.batch()
+
+// Add multiple operations to batch
+batch.set(users.doc('user1'), { name: 'User 1', score: 100 })
+batch.update(users.doc('user2'), { score: 200 })
+batch.delete(users.doc('user3'))
+
+// Commit all operations atomically
+await batch.commit()
+```
+
+### Transactions
+
+```javascript
+await globio.runTransaction(async (transaction) => {
+  // Read data
+  const userDoc = await transaction.get(users.doc('player123'))
+  const currentScore = userDoc.data().score
+  
+  // Write data based on read
+  transaction.update(users.doc('player123'), {
+    score: currentScore + 100,
+    lastUpdated: new Date()
+  })
+})
+```
+
+## 🎮 Gaming Examples
+
+### Player Profiles
+
+```javascript
+// Create player profile
+await users.doc(playerId).set({
+  name: playerName,
+  level: 1,
+  experience: 0,
+  coins: 100,
+  inventory: [],
+  achievements: [],
+  stats: {
+    gamesPlayed: 0,
+    gamesWon: 0,
+    totalPlayTime: 0
+  },
+  createdAt: new Date(),
+  lastLogin: new Date()
+})
+
+// Level up player
+await globio.runTransaction(async (transaction) => {
+  const playerDoc = await transaction.get(users.doc(playerId))
+  const player = playerDoc.data()
+  
+  transaction.update(users.doc(playerId), {
+    level: player.level + 1,
+    experience: 0, // Reset XP for new level
+    coins: player.coins + 50 // Level up bonus
+  })
+})
+```
+
+### Leaderboards
+
+```javascript
+// Get top 10 players by score
+const leaderboard = await users
+  .orderBy('score', 'desc')
+  .limit(10)
+  .get()
+
+// Get player's rank
+const playersAbove = await users
+  .where('score', '>', playerScore)
+  .get()
+const playerRank = playersAbove.size + 1
+```
+
+### Game Sessions
+
+```javascript
+const sessions = globio.collection('gameSessions')
+
+// Start game session
+const sessionRef = await sessions.add({
+  playerId: playerId,
+  gameMode: 'battle-royale',
+  startTime: new Date(),
+  status: 'active',
+  score: 0,
+  kills: 0
+})
+
+// Update session during game
+await sessionRef.update({
+  score: currentScore,
+  kills: currentKills,
+  lastUpdate: new Date()
+})
+
+// End session
+await sessionRef.update({
+  endTime: new Date(),
+  status: 'completed',
+  duration: endTime - startTime
+})
+```
+
+## 🔒 Security Rules
+
+### Basic Rules
+
+```javascript
+// Only authenticated users can read/write their own data
+const userDoc = users.doc(currentUser.uid)
+await userDoc.set(userData) // ✅ Allowed
+await users.doc('otherUser').set(data) // ❌ Denied
+```
+
+### Collection-level Security
+
+```javascript
+// Public leaderboards (read-only for all users)
+const leaderboard = globio.collection('leaderboard')
+const topPlayers = await leaderboard.get() // ✅ Anyone can read
+
+// Private user data
+const privateData = globio.collection('privateUserData')
+// Only the user can access their own private data
+```
+
+## 📊 Performance Tips
+
+### Indexing
+
+```javascript
+// Compound queries require indexes
+// This query needs an index on (status, score)
+const activeTopPlayers = await users
+  .where('status', '==', 'active')
+  .orderBy('score', 'desc')
+  .limit(10)
+  .get()
+```
+
+### Pagination
+
+```javascript
+// Efficient pagination
+let lastDoc = null
+const pageSize = 20
+
+async function getNextPage() {
+  let query = users
+    .orderBy('createdAt')
+    .limit(pageSize)
+  
+  if (lastDoc) {
+    query = query.startAfter(lastDoc)
+  }
+  
+  const snapshot = await query.get()
+  lastDoc = snapshot.docs[snapshot.docs.length - 1]
+  
+  return snapshot.docs.map(doc => doc.data())
+}
+```
+
+### Caching
+
+```javascript
+// Cache frequently accessed data
+const cache = new Map()
+
+async function getCachedUser(userId) {
+  if (cache.has(userId)) {
+    return cache.get(userId)
+  }
+  
+  const doc = await users.doc(userId).get()
+  const userData = doc.data()
+  
+  cache.set(userId, userData)
+  return userData
+}
+```
+
+## 🚀 Migration from Firestore
+
+### Code Changes
+
+```javascript
+// Before (Firestore)
+import { getFirestore, collection, addDoc } from 'firebase/firestore'
+const db = getFirestore()
+const usersRef = collection(db, 'users')
+await addDoc(usersRef, userData)
+
+// After (GlobalDoc)
+import { GlobalDoc } from '@stanlink/globio'
+const globio = new GlobalDoc({ apiKey: 'your-key' })
+const users = globio.collection('users')
+await users.add(userData)
+```
+
+### Data Migration
+
+```javascript
+// Export from Firestore and import to GlobalDoc
+async function migrateCollection(collectionName) {
+  // Export from Firestore
+  const firestoreSnapshot = await firestoreDb.collection(collectionName).get()
+  
+  // Import to GlobalDoc
+  const batch = globio.batch()
+  firestoreSnapshot.forEach(doc => {
+    batch.set(globio.collection(collectionName).doc(doc.id), doc.data())
+  })
+  
+  await batch.commit()
+  console.log(`Migrated ${collectionName}`)
+}
+```
+
+## 💡 Best Practices
+
+### Data Structure
+
+```javascript
+// ✅ Good: Flat structure
+{
+  userId: 'player123',
+  name: 'John',
+  level: 5,
+  stats_gamesPlayed: 100,
+  stats_gamesWon: 75
+}
+
+// ❌ Avoid: Deep nesting
+{
+  userId: 'player123',
+  profile: {
+    personal: {
+      name: 'John',
+      details: {
+        level: 5
+      }
+    }
+  }
+}
+```
+
+### Field Names
+
+```javascript
+// ✅ Use consistent naming
+{
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  isActive: true,
+  playerCount: 4
+}
+
+// ❌ Inconsistent naming
+{
+  created_at: new Date(),
+  UpdatedTime: new Date(),
+  active: true,
+  numPlayers: 4
+}
+```
+
+## 🔧 Advanced Features
+
+### Subcollections
+
+```javascript
+// User's game sessions as subcollection
+const userSessions = users.doc('player123').collection('sessions')
+await userSessions.add({
+  gameMode: 'ranked',
+  score: 1500,
+  date: new Date()
+})
+```
+
+### Array Operations
+
+```javascript
+// Add to array
+await users.doc('player123').update({
+  achievements: arrayUnion('new-achievement')
+})
+
+// Remove from array
+await users.doc('player123').update({
+  achievements: arrayRemove('old-achievement')
+})
+```
+
+### Increment Operations
+
+```javascript
+// Increment score atomically
+await users.doc('player123').update({
+  score: increment(100),
+  gamesPlayed: increment(1)
+})
+```
+
+---
+
+**Next: Learn about [Real-time Features](/globalsync) →**

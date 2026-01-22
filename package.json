@@ -1,6 +1,7 @@
 {
   "name": "globio-docs",
   "version": "1.0.0",
+  "type": "module",
   "description": "Globio Platform Documentation",
   "main": "index.js",
   "scripts": {

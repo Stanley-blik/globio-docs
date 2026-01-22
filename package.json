@@ -15,7 +15,8 @@
     "nextra": "^2.13.0",
     "nextra-theme-docs": "^2.13.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@vercel/analytics": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

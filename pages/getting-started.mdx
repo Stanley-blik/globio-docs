@@ -1,37 +1,69 @@
 # Getting Started with Globio
 
-Welcome to **Globio** - the complete serverless game backend that's 99% cheaper than Firebase. Get your game backend running in minutes, not hours.
+<div style={{textAlign: 'center', margin: '2rem 0'}}>
+  <div style={{fontSize: '1.5rem', marginBottom: '1rem'}}>Welcome to <strong>Globio</strong> - the complete serverless game backend that's 99% cheaper than Firebase</div>
+  <div style={{fontSize: '1.2rem', color: '#6b7280'}}>Get your game backend running in minutes, not hours.</div>
+</div>
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', margin: '2rem 0'}}>
+  <div style={{padding: '1.5rem', border: '1px solid #e5e7eb', borderRadius: '0.75rem', backgroundColor: '#f9fafb', textAlign: 'center'}}>
+    <div style={{fontSize: '2.5rem', marginBottom: '0.5rem'}}>⚡</div>
+    <h3 style={{margin: '0.5rem 0'}}>Lightning Fast</h3>
+    <p>Sub-50ms latency worldwide with edge computing</p>
+  </div>
+  <div style={{padding: '1.5rem', border: '1px solid #e5e7eb', borderRadius: '0.75rem', backgroundColor: '#f9fafb', textAlign: 'center'}}>
+    <div style={{fontSize: '2.5rem', marginBottom: '0.5rem'}}>💰</div>
+    <h3 style={{margin: '0.5rem 0'}}>99% Cheaper</h3>
+    <p>Save thousands per month compared to Firebase</p>
+  </div>
+  <div style={{padding: '1.5rem', border: '1px solid #e5e7eb', borderRadius: '0.75rem', backgroundColor: '#f9fafb', textAlign: 'center'}}>
+    <div style={{fontSize: '2.5rem', marginBottom: '0.5rem'}}>🎮</div>
+    <h3 style={{margin: '0.5rem 0'}}>Built for Games</h3>
+    <p>Everything you need to build successful games</p>
+  </div>
+</div>
 
 ## 🚀 Quick Start
 
-### Step 1: Create Your Account
-
-1. Visit [console.globio.stanl.ink](https://console.globio.stanl.ink)
-2. Click **"Sign up"** and create your account with Google OAuth
-3. Verify your email address
-4. You'll be redirected to your dashboard
-
-### Step 2: Create Your First Project
-
-1. In the Globio Console, click **"New Project"**
-2. Enter your project name (e.g., "My Awesome Game")
-3. Select your region (Auto-detect recommended)
-4. Click **"Create Project"**
-
-### Step 3: Get Your API Keys
-
-1. Click the **settings icon** next to your project name
-2. Go to **"Your apps"** tab
-3. Click **"Add app"** and select your platform:
-   - **Web** - For web games and React apps
-   - **Unity** - For Unity games
-   - **Flutter** - For mobile games
-   - **iOS/Android** - For native mobile apps
-
-4. Copy your configuration snippet
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', margin: '1.5rem 0'}}>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1.5rem', backgroundColor: '#f9fafb'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.75rem'}}>Step 1: Create Your Account</h3>
+    <ol style={{listStylePosition: 'inside', textAlign: 'left'}}>
+      <li>Visit <a href="https://console.globio.stanl.ink">console.globio.stanl.ink</a></li>
+      <li>Click <strong>"Sign up"</strong> and create your account with Google OAuth</li>
+      <li>Verify your email address</li>
+      <li>You'll be redirected to your dashboard</li>
+    </ol>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1.5rem', backgroundColor: '#f9fafb'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.75rem'}}>Step 2: Create Your First Project</h3>
+    <ol style={{listStylePosition: 'inside', textAlign: 'left'}}>
+      <li>In the Globio Console, click <strong>"New Project"</strong></li>
+      <li>Enter your project name (e.g., "My Awesome Game")</li>
+      <li>Select your region (Auto-detect recommended)</li>
+      <li>Click <strong>"Create Project"</strong></li>
+    </ol>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1.5rem', backgroundColor: '#f9fafb'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.75rem'}}>Step 3: Get Your API Keys</h3>
+    <ol style={{listStylePosition: 'inside', textAlign: 'left'}}>
+      <li>Click the <strong>settings icon</strong> next to your project name</li>
+      <li>Go to <strong>"Your apps"</strong> tab</li>
+      <li>Click <strong>"Add app"</strong> and select your platform:</li>
+      <ul style={{listStyleType: 'circle', paddingLeft: '1.5rem', marginTop: '0.5rem'}}>
+        <li><strong>Web</strong> - For web games and React apps</li>
+        <li><strong>Unity</strong> - For Unity games</li>
+        <li><strong>Flutter</strong> - For mobile games</li>
+        <li><strong>iOS/Android</strong> - For native mobile apps</li>
+      </ul>
+      <li>Copy your configuration snippet</li>
+    </ol>
+  </div>
+</div>
 
 ### Step 4: Install the SDK
 
+<div style={{background: '#f8fafc', padding: '1rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
 ```bash
 # JavaScript/TypeScript
 npm install @stanlink/globio
@@ -42,9 +74,11 @@ npm install @stanlink/globio
 # Flutter
 flutter pub add globio
 ```
+</div>
 
 ### Step 5: Initialize Globio
 
+<div style={{background: '#f8fafc', padding: '1rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
 ```javascript
 // Web/React/Node.js
 import { GlobalDoc } from '@stanlink/globio'
@@ -64,7 +98,9 @@ await users.add({
 
 console.log('🎉 Globio is working!')
 ```
+</div>
 
+<div style={{background: '#f8fafc', padding: '1rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
 ```csharp
 // Unity C# (coming soon)
 using Globio;
@@ -81,63 +117,121 @@ public class GameManager : MonoBehaviour {
     }
 }
 ```
+</div>
 
 ## 🎮 What's Included
 
-### The Core 5 (Essential Services)
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>🗄️ GlobalDoc</div>
+    <p>Document database (like Firestore)</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>📦 GlobalVault</div>
+    <p>File storage (like Firebase Storage)</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>⚡ GlobalCode</div>
+    <p>Serverless functions (like Cloud Functions)</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>🆔 GlobioID</div>
+    <p>Authentication (like Firebase Auth)</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>⚡ GlobalPulse</div>
+    <p>Live configuration (like Remote Config)</p>
+  </div>
+</div>
 
-1. **[GlobalDoc](/globaldoc)** - Document database (like Firestore)
-2. **[GlobalVault](/globalvault)** - File storage (like Firebase Storage)
-3. **[GlobalCode](/globalcode)** - Serverless functions (like Cloud Functions)
-4. **[GlobioID](/globioid)** - Authentication (like Firebase Auth)
-5. **[GlobalPulse](/globalpulse)** - Live configuration (like Remote Config)
-
-### The Power 5 (Pro Features)
-
-6. **[GlobalSync](/globalsync)** - Real-time multiplayer
-7. **[GlobalBrain](/globalbrain)** - AI & ML at the edge
-8. **[GlobalScope](/globalscope)** - High-performance analytics
-9. **[GlobalSignal](/globalsignal)** - Push notifications
-10. **[GlobalMart](/globalmart)** - Virtual economy & IAP
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>⚔️ GlobalSync</div>
+    <p>Real-time multiplayer</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>🧠 GlobalBrain</div>
+    <p>AI & ML at the edge</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>📊 GlobalScope</div>
+    <p>High-performance analytics</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>📡 GlobalSignal</div>
+    <p>Push notifications</p>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', backgroundColor: '#f3f4f6'}}>
+    <div style={{fontWeight: 'bold', fontSize: '1.1rem', color: '#0ea5e9', marginBottom: '0.5rem'}}>💎 GlobalMart</div>
+    <p>Virtual economy & IAP</p>
+  </div>
+</div>
 
 ## 💰 Pricing
 
-### Free Tier (Forever)
-- 100K database operations/month
-- 10K function invocations/month
-- 1GB storage
-- 10GB bandwidth
-- All Core 5 services
-- Community support
-
-### Pro Tier ($29/month)
-- 10M database operations/month
-- 1M function invocations/month
-- 100GB storage
-- 1TB bandwidth
-- All Power 5 services
-- Email support
-
-### Enterprise (Custom)
-- Unlimited everything
-- Dedicated support
-- SLA guarantees
-- Custom contracts
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', margin: '1.5rem 0'}}>
+  <div style={{border: '2px solid #e5e7eb', borderRadius: '0.75rem', padding: '1.5rem', textAlign: 'center'}}>
+    <h3 style={{color: '#0ea5e9', fontSize: '1.5rem', marginBottom: '1rem'}}>Free Tier</h3>
+    <div style={{fontSize: '2rem', marginBottom: '1rem'}}>🆓</div>
+    <ul style={{listStyleType: 'none', paddingLeft: 0, textAlign: 'left', marginBottom: '1rem'}}>
+      <li>• 100K database operations/month</li>
+      <li>• 10K function invocations/month</li>
+      <li>• 1GB storage</li>
+      <li>• 10GB bandwidth</li>
+      <li>• All Core 5 services</li>
+      <li>• Community support</li>
+    </ul>
+    <button style={{backgroundColor: '#9ca3af', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.25rem', cursor: 'pointer'}}>Get Started</button>
+  </div>
+  <div style={{border: '2px solid #0ea5e9', borderRadius: '0.75rem', padding: '1.5rem', textAlign: 'center', backgroundColor: '#f0f9ff'}}>
+    <h3 style={{color: '#0ea5e9', fontSize: '1.5rem', marginBottom: '1rem'}}>Pro Tier ($29/month)</h3>
+    <div style={{fontSize: '2rem', marginBottom: '1rem'}}>🚀</div>
+    <ul style={{listStyleType: 'none', paddingLeft: 0, textAlign: 'left', marginBottom: '1rem'}}>
+      <li>• 10M database operations/month</li>
+      <li>• 1M function invocations/month</li>
+      <li>• 100GB storage</li>
+      <li>• 1TB bandwidth</li>
+      <li>• All Power 5 services</li>
+      <li>• Email support</li>
+    </ul>
+    <button style={{backgroundColor: '#0ea5e9', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.25rem', cursor: 'pointer'}}>Start Free Trial</button>
+  </div>
+  <div style={{border: '2px solid #8b5cf6', borderRadius: '0.75rem', padding: '1.5rem', textAlign: 'center'}}>
+    <h3 style={{color: '#8b5cf6', fontSize: '1.5rem', marginBottom: '1rem'}}>Enterprise</h3>
+    <div style={{fontSize: '2rem', marginBottom: '1rem'}}>🏢</div>
+    <ul style={{listStyleType: 'none', paddingLeft: 0, textAlign: 'left', marginBottom: '1rem'}}>
+      <li>• Unlimited everything</li>
+      <li>• Dedicated support</li>
+      <li>• SLA guarantees</li>
+      <li>• Custom contracts</li>
+    </ul>
+    <button style={{backgroundColor: '#8b5cf6', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.25rem', cursor: 'pointer'}}>Contact Sales</button>
+  </div>
+</div>
 
 ## 🔥 Why Choose Globio?
 
-### 99% Cheaper than Firebase
-- **Firebase**: $4,730/month for 10M operations
-- **Globio**: $30/month for 10M operations
-- **Save**: $56,400 per year
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', margin: '1.5rem 0'}}>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1.25rem'}}>
+    <h3 style={{color: '#ef4444', marginBottom: '0.75rem'}}>99% Cheaper than Firebase</h3>
+    <ul style={{listStyleType: 'none', textAlign: 'left', marginTop: '0.5rem'}}>
+      <li><strong>Firebase</strong>: $4,730/month for 10M operations</li>
+      <li><strong>Globio</strong>: $30/month for 10M operations</li>
+      <li><strong>Save</strong>: $56,400 per year</li>
+    </ul>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1.25rem'}}>
+    <h3 style={{color: '#10b981', marginBottom: '0.75rem'}}>Built for Games</h3>
+    <ul style={{listStyleType: 'none', textAlign: 'left', marginTop: '0.5rem'}}>
+      <li>Real-time multiplayer out of the box</li>
+      <li>AI-powered NPCs and matchmaking</li>
+      <li>Virtual economy with IAP validation</li>
+      <li>Edge-first architecture = sub-50ms latency worldwide</li>
+    </ul>
+  </div>
+</div>
 
-### Built for Games
-- Real-time multiplayer out of the box
-- AI-powered NPCs and matchmaking
-- Virtual economy with IAP validation
-- Edge-first architecture = sub-50ms latency worldwide
-
-### Firebase-Compatible API
+<div style={{background: '#f8fafc', padding: '1rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
 ```javascript
 // Your Firebase code works with minimal changes
 // Just change the import!
@@ -145,21 +239,58 @@ import { GlobalDoc } from '@stanlink/globio'
 // vs
 // import { getFirestore } from 'firebase/firestore'
 ```
+</div>
 
 ## 🆘 Need Help?
 
-- 📚 **Documentation**: You're reading it!
-- 💬 **Discord**: [Join our community](https://discord.gg/globio)
-- 📧 **Email**: support@globio.dev
-- 🐛 **Issues**: [GitHub Issues](https://github.com/Stanley-blik/globio-docs/issues)
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', textAlign: 'center'}}>
+    <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>📚</div>
+    <div><strong>Documentation</strong><br />You're reading it!</div>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', textAlign: 'center'}}>
+    <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>💬</div>
+    <div><strong>Discord</strong><br /><a href="https://discord.gg/globio">Join our community</a></div>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', textAlign: 'center'}}>
+    <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>📧</div>
+    <div><strong>Email</strong><br />support@globio.dev</div>
+  </div>
+  <div style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', textAlign: 'center'}}>
+    <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>🐛</div>
+    <div><strong>Issues</strong><br /><a href="https://github.com/Stanley-blik/globio-docs/issues">GitHub Issues</a></div>
+  </div>
+</div>
 
 ## 🎯 Next Steps
 
-1. **[Learn GlobalDoc](/globaldoc)** - Start with the database
-2. **[Add Authentication](/globioid)** - Secure your app
-3. **[Deploy Functions](/globalcode)** - Add server-side logic
-4. **[Go Multiplayer](/globalsync)** - Add real-time features
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+  <a href="/globaldoc" style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', display: 'block', textDecoration: 'none', color: 'inherit'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.5rem'}}>Learn GlobalDoc</h3>
+    <p>Start with the database</p>
+  </a>
+  <a href="/globioid" style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', display: 'block', textDecoration: 'none', color: 'inherit'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.5rem'}}>Add Authentication</h3>
+    <p>Secure your app</p>
+  </a>
+  <a href="/globalcode" style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', display: 'block', textDecoration: 'none', color: 'inherit'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.5rem'}}>Deploy Functions</h3>
+    <p>Add server-side logic</p>
+  </a>
+  <a href="/globalsync" style={{border: '1px solid #e5e7eb', borderRadius: '0.5rem', padding: '1rem', display: 'block', textDecoration: 'none', color: 'inherit'}}>
+    <h3 style={{color: '#0ea5e9', marginBottom: '0.5rem'}}>Go Multiplayer</h3>
+    <p>Add real-time features</p>
+  </a>
+</div>
 
 ---
 
-**Ready to build the next hit game? Let's go! 🚀**
+<div style={{textAlign: 'center', padding: '2rem', backgroundColor: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: '0.75rem', margin: '2rem 0'}}>
+  <h2 style={{marginBottom: '1rem'}}>Ready to build the next hit game? Let's go! 🚀</h2>
+  <p style={{marginBottom: '1.5rem'}}>Join thousands of game developers who have switched to the 99% cheaper backend</p>
+  <div style={{display: 'flex', justifyContent: 'center', gap: '1rem'}}>
+    <a href="https://dashboard.globio.dev" style={{backgroundColor: '#0ea5e9', color: 'white', textDecoration: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', fontWeight: 'bold'}}>Get Started</a>
+    <a href="https://github.com/globio/examples" style={{backgroundColor: 'white', color: '#0ea5e9', textDecoration: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', border: '1px solid #0ea5e9', fontWeight: 'bold'}}>View Examples</a>
+    <a href="https://discord.gg/globio" style={{backgroundColor: 'white', color: '#5865F2', textDecoration: 'none', padding: '0.75rem 1.5rem', borderRadius: '0.5rem', border: '1px solid #5865F2', fontWeight: 'bold'}}>Join Discord</a>
+  </div>
+</div>

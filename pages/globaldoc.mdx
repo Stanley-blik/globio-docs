@@ -53,40 +53,33 @@ console.log('Document added with ID:', docRef.id)
 
 ## 📚 Core Concepts
 
-<FeatureCard title="Collections" icon="📂" color="#0ea5e9">
-  Collections are containers for documents. Think of them as tables in a traditional database.
-  
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Get a collection reference
-  const users = globio.collection('users')
-  const posts = globio.collection('posts')
-  const gameStats = globio.collection('gameStats')
-  ```
-  </div>
-</FeatureCard>
+### Collections
+📂 Collections are containers for documents. Think of them as tables in a traditional database.
 
-<FeatureCard title="Documents" icon="📄" color="#0ea5e9">
-  Documents are JSON objects stored in collections. Each document has a unique ID.
-  
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Add a document with auto-generated ID
-  const docRef = await users.add({
-    name: 'Alice',
-    score: 1500,
-    achievements: ['first-win', 'level-10']
-  })
+```javascript
+// Get a collection reference
+const users = globio.collection('users')
+const posts = globio.collection('posts')
+const gameStats = globio.collection('gameStats')
+```
 
-  // Add a document with custom ID
-  await users.doc('player123').set({
-    name: 'Bob',
-    score: 2000,
-    lastLogin: new Date()
-  })
-  ```
-  </div>
-</FeatureCard>
+### Documents
+📄 Documents are JSON objects stored in collections. Each document has a unique ID.
+
+```javascript
+// Add a document with auto-generated ID
+const docRef = await users.add({
+  name: 'Alice',
+  score: 1500,
+  achievements: ['first-win', 'level-10']
+})
+
+// Add a document with custom ID
+await users.doc('player123').set({
+  name: 'Bob',
+  score: 2000,
+  lastLogin: new Date()
+})
 ```
 
 ## 🔍 Querying Data
@@ -141,442 +134,419 @@ const specificUsers = await users
 
 ## 📝 Writing Data
 
-<FeatureCard title="Adding Documents" icon="➕" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Add with auto-generated ID
-  const docRef = await users.add({
-    name: 'Charlie',
-    level: 1
-  })
+### Adding Documents
+➕ Add documents with auto-generated or custom IDs
 
-  // Add with custom ID
-  await users.doc('charlie123').set({
-    name: 'Charlie',
-    level: 1
-  })
-  ```
-  </div>
-</FeatureCard>
+```javascript
+// Add with auto-generated ID
+const docRef = await users.add({
+  name: 'Charlie',
+  level: 1
+})
 
-<FeatureCard title="Updating Documents" icon="✏️" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Update specific fields
-  await users.doc('charlie123').update({
-    level: 2,
-    lastUpdated: new Date()
-  })
+// Add with custom ID
+await users.doc('charlie123').set({
+  name: 'Charlie',
+  level: 1
+})
+```
 
-  // Set with merge (updates existing fields, adds new ones)
-  await users.doc('charlie123').set({
-    newField: 'value'
-  }, { merge: true })
-  ```
-  </div>
-</FeatureCard>
+### Updating Documents
+✏️ Update specific fields in existing documents
 
-<FeatureCard title="Deleting Documents" icon="🗑️" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Delete a document
-  await users.doc('charlie123').delete()
+```javascript
+// Update specific fields
+await users.doc('charlie123').update({
+  level: 2,
+  lastUpdated: new Date()
+})
 
-  // Delete a field
-  await users.doc('alice123').update({
-    temporaryField: null // This deletes the field
-  })
-  ```
-  </div>
-</FeatureCard>
+// Set with merge (updates existing fields, adds new ones)
+await users.doc('charlie123').set({
+  newField: 'value'
+}, { merge: true })
+```
+
+### Deleting Documents
+🗑️ Remove documents or fields
+
+```javascript
+// Delete a document
+await users.doc('charlie123').delete()
+
+// Delete a field
+await users.doc('alice123').update({
+  temporaryField: null // This deletes the field
+})
 ```
 
 ## ⚡ Real-time Updates
 
-<FeatureCard title="Listen to Documents" icon="👂" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Listen to a single document
-  const unsubscribe = users.doc('player123').onSnapshot(doc => {
-    if (doc.exists) {
-      console.log('Player data:', doc.data())
-    }
+### Listen to Documents
+👂 Subscribe to real-time changes on individual documents
+
+```javascript
+// Listen to a single document
+const unsubscribe = users.doc('player123').onSnapshot(doc => {
+  if (doc.exists) {
+    console.log('Player data:', doc.data())
+  }
+})
+
+// Stop listening
+unsubscribe()
+```
+
+### Listen to Collections
+📚 Subscribe to real-time changes on collections and queries
+
+```javascript
+// Listen to all users
+const unsubscribe = users.onSnapshot(snapshot => {
+  snapshot.forEach(doc => {
+    console.log('User updated:', doc.data())
   })
+})
 
-  // Stop listening
-  unsubscribe()
-  ```
-  </div>
-</FeatureCard>
-
-<FeatureCard title="Listen to Collections" icon="📚" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Listen to all users
-  const unsubscribe = users.onSnapshot(snapshot => {
-    snapshot.forEach(doc => {
-      console.log('User updated:', doc.data())
-    })
+// Listen to query results
+const unsubscribe = users
+  .where('online', '==', true)
+  .onSnapshot(snapshot => {
+    console.log('Online users:', snapshot.size)
   })
-
-  // Listen to query results
-  const unsubscribe = users
-    .where('online', '==', true)
-    .onSnapshot(snapshot => {
-      console.log('Online users:', snapshot.size)
-    })
-  ```
-  </div>
-</FeatureCard>
+```
 
 ## 🔄 Batch Operations
 
-<FeatureCard title="Batch Writes" icon="📦" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  const batch = globio.batch()
+### Batch Writes
+📦 Perform multiple write operations atomically
 
-  // Add multiple operations to batch
-  batch.set(users.doc('user1'), { name: 'User 1', score: 100 })
-  batch.update(users.doc('user2'), { score: 200 })
-  batch.delete(users.doc('user3'))
+```javascript
+const batch = globio.batch()
 
-  // Commit all operations atomically
-  await batch.commit()
-  ```
-  </div>
-</FeatureCard>
+// Add multiple operations to batch
+batch.set(users.doc('user1'), { name: 'User 1', score: 100 })
+batch.update(users.doc('user2'), { score: 200 })
+batch.delete(users.doc('user3'))
 
-<FeatureCard title="Transactions" icon="🔄" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  await globio.runTransaction(async (transaction) => {
-    // Read data
-    const userDoc = await transaction.get(users.doc('player123'))
-    const currentScore = userDoc.data().score
-    
-    // Write data based on read
-    transaction.update(users.doc('player123'), {
-      score: currentScore + 100,
-      lastUpdated: new Date()
-    })
+// Commit all operations atomically
+await batch.commit()
+```
+
+### Transactions
+🔄 Read and write data atomically
+
+```javascript
+await globio.runTransaction(async (transaction) => {
+  // Read data
+  const userDoc = await transaction.get(users.doc('player123'))
+  const currentScore = userDoc.data().score
+  
+  // Write data based on read
+  transaction.update(users.doc('player123'), {
+    score: currentScore + 100,
+    lastUpdated: new Date()
   })
-  ```
-  </div>
-</FeatureCard>
+})
+```
 
 ## 🎮 Gaming Examples
 
-<FeatureCard title="Player Profiles" icon="👤" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Create player profile
-  await users.doc(playerId).set({
-    name: playerName,
-    level: 1,
-    experience: 0,
-    coins: 100,
-    inventory: [],
-    achievements: [],
-    stats: {
-      gamesPlayed: 0,
-      gamesWon: 0,
-      totalPlayTime: 0
-    },
-    createdAt: new Date(),
-    lastLogin: new Date()
+### Player Profiles
+👤 Create and manage player data
+
+```javascript
+// Create player profile
+await users.doc(playerId).set({
+  name: playerName,
+  level: 1,
+  experience: 0,
+  coins: 100,
+  inventory: [],
+  achievements: [],
+  stats: {
+    gamesPlayed: 0,
+    gamesWon: 0,
+    totalPlayTime: 0
+  },
+  createdAt: new Date(),
+  lastLogin: new Date()
+})
+
+// Level up player
+await globio.runTransaction(async (transaction) => {
+  const playerDoc = await transaction.get(users.doc(playerId))
+  const player = playerDoc.data()
+  
+  transaction.update(users.doc(playerId), {
+    level: player.level + 1,
+    experience: 0, // Reset XP for new level
+    coins: player.coins + 50 // Level up bonus
   })
+})
+```
 
-  // Level up player
-  await globio.runTransaction(async (transaction) => {
-    const playerDoc = await transaction.get(users.doc(playerId))
-    const player = playerDoc.data()
-    
-    transaction.update(users.doc(playerId), {
-      level: player.level + 1,
-      experience: 0, // Reset XP for new level
-      coins: player.coins + 50 // Level up bonus
-    })
-  })
-  ```
-  </div>
-</FeatureCard>
+### Leaderboards
+🏆 Track top players and rankings
 
-<FeatureCard title="Leaderboards" icon="🏆" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Get top 10 players by score
-  const leaderboard = await users
-    .orderBy('score', 'desc')
-    .limit(10)
-    .get()
+```javascript
+// Get top 10 players by score
+const leaderboard = await users
+  .orderBy('score', 'desc')
+  .limit(10)
+  .get()
 
-  // Get player's rank
-  const playersAbove = await users
-    .where('score', '>', playerScore)
-    .get()
-  const playerRank = playersAbove.size + 1
-  ```
-  </div>
-</FeatureCard>
+// Get player's rank
+const playersAbove = await users
+  .where('score', '>', playerScore)
+  .get()
+const playerRank = playersAbove.size + 1
+```
 
-<FeatureCard title="Game Sessions" icon="🎮" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  const sessions = globio.collection('gameSessions')
+### Game Sessions
+🎮 Track individual game sessions
 
-  // Start game session
-  const sessionRef = await sessions.add({
-    playerId: playerId,
-    gameMode: 'battle-royale',
-    startTime: new Date(),
-    status: 'active',
-    score: 0,
-    kills: 0
-  })
+```javascript
+const sessions = globio.collection('gameSessions')
 
-  // Update session during game
-  await sessionRef.update({
-    score: currentScore,
-    kills: currentKills,
-    lastUpdate: new Date()
-  })
+// Start game session
+const sessionRef = await sessions.add({
+  playerId: playerId,
+  gameMode: 'battle-royale',
+  startTime: new Date(),
+  status: 'active',
+  score: 0,
+  kills: 0
+})
 
-  // End session
-  await sessionRef.update({
-    endTime: new Date(),
-    status: 'completed',
-    duration: endTime - startTime
-  })
-  ```
-  </div>
-</FeatureCard>
+// Update session during game
+await sessionRef.update({
+  score: currentScore,
+  kills: currentKills,
+  lastUpdate: new Date()
+})
+
+// End session
+await sessionRef.update({
+  endTime: new Date(),
+  status: 'completed',
+  duration: endTime - startTime
+})
+```
 
 ## 🔒 Security Rules
 
-<FeatureCard title="Basic Rules" icon="🔒" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Only authenticated users can read/write their own data
-  const userDoc = users.doc(currentUser.uid)
-  await userDoc.set(userData) // ✅ Allowed
-  await users.doc('otherUser').set(data) // ❌ Denied
-  ```
-  </div>
-</FeatureCard>
+### Basic Rules
+🔒 Control access to your data
 
-<FeatureCard title="Collection-level Security" icon="🛡️" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Public leaderboards (read-only for all users)
-  const leaderboard = globio.collection('leaderboard')
-  const topPlayers = await leaderboard.get() // ✅ Anyone can read
+```javascript
+// Only authenticated users can read/write their own data
+const userDoc = users.doc(currentUser.uid)
+await userDoc.set(userData) // ✅ Allowed
+await users.doc('otherUser').set(data) // ❌ Denied
+```
 
-  // Private user data
-  const privateData = globio.collection('privateUserData')
-  // Only the user can access their own private data
-  ```
-  </div>
-</FeatureCard>
+### Collection-level Security
+🛡️ Set permissions for entire collections
+
+```javascript
+// Public leaderboards (read-only for all users)
+const leaderboard = globio.collection('leaderboard')
+const topPlayers = await leaderboard.get() // ✅ Anyone can read
+
+// Private user data
+const privateData = globio.collection('privateUserData')
+// Only the user can access their own private data
+```
 
 ## 📊 Performance Tips
 
-<FeatureCard title="Indexing" icon="🔍" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Compound queries require indexes
-  // This query needs an index on (status, score)
-  const activeTopPlayers = await users
-    .where('status', '==', 'active')
-    .orderBy('score', 'desc')
-    .limit(10)
-    .get()
-  ```
-  </div>
-</FeatureCard>
+### Indexing
+🔍 Optimize queries with proper indexes
 
-<FeatureCard title="Pagination" icon="📋" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Efficient pagination
-  let lastDoc = null
-  const pageSize = 20
+```javascript
+// Compound queries require indexes
+// This query needs an index on (status, score)
+const activeTopPlayers = await users
+  .where('status', '==', 'active')
+  .orderBy('score', 'desc')
+  .limit(10)
+  .get()
+```
 
-  async function getNextPage() {
-    let query = users
-      .orderBy('createdAt')
-      .limit(pageSize)
-    
-    if (lastDoc) {
-      query = query.startAfter(lastDoc)
-    }
-    
-    const snapshot = await query.get()
-    lastDoc = snapshot.docs[snapshot.docs.length - 1]
-    
-    return snapshot.docs.map(doc => doc.data())
+### Pagination
+📋 Efficiently load large datasets
+
+```javascript
+// Efficient pagination
+let lastDoc = null
+const pageSize = 20
+
+async function getNextPage() {
+  let query = users
+    .orderBy('createdAt')
+    .limit(pageSize)
+  
+  if (lastDoc) {
+    query = query.startAfter(lastDoc)
   }
-  ```
-  </div>
-</FeatureCard>
+  
+  const snapshot = await query.get()
+  lastDoc = snapshot.docs[snapshot.docs.length - 1]
+  
+  return snapshot.docs.map(doc => doc.data())
+}
+```
 
-<FeatureCard title="Caching" icon="💾" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Cache frequently accessed data
-  const cache = new Map()
+### Caching
+💾 Cache frequently accessed data
 
-  async function getCachedUser(userId) {
-    if (cache.has(userId)) {
-      return cache.get(userId)
-    }
-    
-    const doc = await users.doc(userId).get()
-    const userData = doc.data()
-    
-    cache.set(userId, userData)
-    return userData
+```javascript
+// Cache frequently accessed data
+const cache = new Map()
+
+async function getCachedUser(userId) {
+  if (cache.has(userId)) {
+    return cache.get(userId)
   }
-  ```
-  </div>
-</FeatureCard>
+  
+  const doc = await users.doc(userId).get()
+  const userData = doc.data()
+  
+  cache.set(userId, userData)
+  return userData
+}
+```
 
 ## 🚀 Migration from Firestore
 
-<FeatureCard title="Code Changes" icon="🔄" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Before (Firestore)
-  import { getFirestore, collection, addDoc } from 'firebase/firestore'
-  const db = getFirestore()
-  const usersRef = collection(db, 'users')
-  await addDoc(usersRef, userData)
+### Code Changes
+🔄 Simple API migration
 
-  // After (GlobalDoc)
-  import { GlobalDoc } from '@stanlink/globio'
-  const globio = new GlobalDoc({ apiKey: 'your-key' })
-  const users = globio.collection('users')
-  await users.add(userData)
-  ```
-  </div>
-</FeatureCard>
+```javascript
+// Before (Firestore)
+import { getFirestore, collection, addDoc } from 'firebase/firestore'
+const db = getFirestore()
+const usersRef = collection(db, 'users')
+await addDoc(usersRef, userData)
 
-<FeatureCard title="Data Migration" icon="🚚" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Export from Firestore and import to GlobalDoc
-  async function migrateCollection(collectionName) {
-    // Export from Firestore
-    const firestoreSnapshot = await firestoreDb.collection(collectionName).get()
-    
-    // Import to GlobalDoc
-    const batch = globio.batch()
-    firestoreSnapshot.forEach(doc => {
-      batch.set(globio.collection(collectionName).doc(doc.id), doc.data())
-    })
-    
-    await batch.commit()
-    console.log(`Migrated ${collectionName}`)
-  }
-  ```
-  </div>
-</FeatureCard>
+// After (GlobalDoc)
+import { GlobalDoc } from '@stanlink/globio'
+const globio = new GlobalDoc({ apiKey: 'your-key' })
+const users = globio.collection('users')
+await users.add(userData)
+```
+
+### Data Migration
+🚚 Export and import your data
+
+```javascript
+// Export from Firestore and import to GlobalDoc
+async function migrateCollection(collectionName) {
+  // Export from Firestore
+  const firestoreSnapshot = await firestoreDb.collection(collectionName).get()
+  
+  // Import to GlobalDoc
+  const batch = globio.batch()
+  firestoreSnapshot.forEach(doc => {
+    batch.set(globio.collection(collectionName).doc(doc.id), doc.data())
+  })
+  
+  await batch.commit()
+  console.log(`Migrated ${collectionName}`)
+}
+```
 
 ## 💡 Best Practices
 
-<FeatureCard title="Data Structure" icon="🏗️" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // ✅ Good: Flat structure
-  {
-    userId: 'player123',
-    name: 'John',
-    level: 5,
-    stats_gamesPlayed: 100,
-    stats_gamesWon: 75
-  }
+### Data Structure
+🏗️ Design efficient document structures
 
-  // ❌ Avoid: Deep nesting
-  {
-    userId: 'player123',
-    profile: {
-      personal: {
-        name: 'John',
-        details: {
-          level: 5
-        }
+```javascript
+// ✅ Good: Flat structure
+{
+  userId: 'player123',
+  name: 'John',
+  level: 5,
+  stats_gamesPlayed: 100,
+  stats_gamesWon: 75
+}
+
+// ❌ Avoid: Deep nesting
+{
+  userId: 'player123',
+  profile: {
+    personal: {
+      name: 'John',
+      details: {
+        level: 5
       }
     }
   }
-  ```
-  </div>
-</FeatureCard>
+}
+```
 
-<FeatureCard title="Field Names" icon="🏷️" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // ✅ Use consistent naming
-  {
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    isActive: true,
-    playerCount: 4
-  }
+### Field Names
+🏷️ Use consistent naming conventions
 
-  // ❌ Inconsistent naming
-  {
-    created_at: new Date(),
-    UpdatedTime: new Date(),
-    active: true,
-    numPlayers: 4
-  }
-  ```
-  </div>
-</FeatureCard>
+```javascript
+// ✅ Use consistent naming
+{
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  isActive: true,
+  playerCount: 4
+}
+
+// ❌ Inconsistent naming
+{
+  created_at: new Date(),
+  UpdatedTime: new Date(),
+  active: true,
+  numPlayers: 4
+}
+```
 
 ## 🔧 Advanced Features
 
-<FeatureCard title="Subcollections" icon="📁" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // User's game sessions as subcollection
-  const userSessions = users.doc('player123').collection('sessions')
-  await userSessions.add({
-    gameMode: 'ranked',
-    score: 1500,
-    date: new Date()
-  })
-  ```
-  </div>
-</FeatureCard>
+### Subcollections
+📁 Organize related data hierarchically
 
-<FeatureCard title="Array Operations" icon=" [] " color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Add to array
-  await users.doc('player123').update({
-    achievements: arrayUnion('new-achievement')
-  })
+```javascript
+// User's game sessions as subcollection
+const userSessions = users.doc('player123').collection('sessions')
+await userSessions.add({
+  gameMode: 'ranked',
+  score: 1500,
+  date: new Date()
+})
+```
 
-  // Remove from array
-  await users.doc('player123').update({
-    achievements: arrayRemove('old-achievement')
-  })
-  ```
-  </div>
-</FeatureCard>
+### Array Operations
+\[\] Manipulate arrays atomically
 
-<FeatureCard title="Increment Operations" icon="📈" color="#0ea5e9">
-  <div style={{background: '#f8fafc', padding: '0.75rem', borderRadius: '0.5rem', border: '1px solid #e2e8f0', margin: '1rem 0'}}>
-  ```javascript
-  // Increment score atomically
-  await users.doc('player123').update({
-    score: increment(100),
-    gamesPlayed: increment(1)
-  })
-  ```
-  </div>
-</FeatureCard>
+```javascript
+// Add to array
+await users.doc('player123').update({
+  achievements: arrayUnion('new-achievement')
+})
+
+// Remove from array
+await users.doc('player123').update({
+  achievements: arrayRemove('old-achievement')
+})
+```
+
+### Increment Operations
+📈 Atomic numeric operations
+
+```javascript
+// Increment score atomically
+await users.doc('player123').update({
+  score: increment(100),
+  gamesPlayed: increment(1)
+})
+```
 
 ---
 

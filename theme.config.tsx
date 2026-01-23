@@ -118,9 +118,6 @@ const config: DocsThemeConfig = {
   search: {
     placeholder: 'Search Globio docs...'
   },
-  layout: {
-    unstable_forceDarkTheme: false,
-  },
   darkMode: true,
 }
 

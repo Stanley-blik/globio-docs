@@ -42,8 +42,8 @@ const PricingCard = ({ children, title, price, highlight = false }) => {
       {highlight && (
         <div style={{
           position: 'absolute',
-          top: '0',
-          right: '0',
+          top: 0,
+          right: 0,
           background: '#0ea5e9',
           color: 'white',
           padding: '0.25rem 0.75rem',
@@ -55,7 +55,7 @@ const PricingCard = ({ children, title, price, highlight = false }) => {
           POPULAR
         </div>
       )}
-      <h3 style={{ color: highlight ? '#0ea5e9' : '#0ea5e9', fontSize: '1.5rem', marginBottom: '1rem' }}>{title}</h3>
+      <h3 style={{ color: '#0ea5e9', fontSize: '1.5rem', marginBottom: '1rem' }}>{title}</h3>
       {price && <div style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>{price}</div>}
       <ul style={{ listStyleType: 'none', paddingLeft: 0, textAlign: 'left', marginBottom: '1.5rem' }}>
         {children}
